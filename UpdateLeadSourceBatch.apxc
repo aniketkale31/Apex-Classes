@@ -1,0 +1,31 @@
+public class UpdateLeadSourceBatch implements Database.Batchable<sObject> {
+
+    public static Database.QueryLocator start(Database.BatchableContext context){
+        
+        String country = 'US';
+        String city = 'New York';
+        
+        //Retrieve all leads with city and country of your choice
+        String query = 'select Id, LeadSource, Rating from Lead where Country = :country and City = :city';
+        return Database.getQueryLocator(query);
+        
+    }
+    
+    public static void execute(Database.BatchableContext context, List<sObject> scope){
+        
+        List<Lead> leadList = scope;
+        for(Lead leadToUpdate : leadList){
+            
+            //Perform the update of LeadSource and Rating on every qualified lead
+            leadToUpdate.LeadSource = 'Web';
+            leadToUpdate.Rating = 'Hot';            
+        }
+        //Commit changes to DB
+        update leadList;
+        
+    }
+    
+    public static void finish(Database.BatchableContext context){
+        
+    }
+}
