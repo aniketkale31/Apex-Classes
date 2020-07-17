@@ -4,7 +4,7 @@ public class UpdateLeadSourceBatchTest {
     @testSetup
     public static void createLead(){
         
-        //Insert a lead with City and Country of your choice
+        
         Lead newLead = new Lead(LastName = 'Test Lead', Company = 'Test Company', City = 'New York', Country = 'US',
                                 Status = 'Working - Contacted', Rating = 'Warm', LeadSource = 'Phone');
         insert newLead;
@@ -17,19 +17,19 @@ public class UpdateLeadSourceBatchTest {
         Lead leadToUpdate = [select Id, LeadSource, Rating from Lead where Company = 'Test Company'];
         
         Test.startTest();
-        //Execute the batch here
+        
         Id batchJobId = Database.executeBatch(new UpdateLeadSourceBatch());
         Test.stopTest();
         
-        //Retrieve batch job Id, to check the result once it is completed
+        
         AsyncApexJob batchJob = [select Id, Status from AsyncApexJob where Id = :batchJobId];
         
         if(batchJob.Status == 'Completed'){
             
-            //Retrieve inserted lead to validate the update
+            
             Lead leadUpdated = [select Id, LeadSource, Rating from Lead where Company = 'Test Company'];
             
-            //Check the desired update successful or not
+            
             System.assertEquals('Web', leadUpdated.LeadSource);
             System.assertEquals('Hot', leadUpdated.Rating);
         }
