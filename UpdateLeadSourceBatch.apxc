@@ -5,7 +5,7 @@ public class UpdateLeadSourceBatch implements Database.Batchable<sObject> {
         String country = 'US';
         String city = 'New York';
         
-        //Retrieve all leads with city and country of your choice
+        
         String query = 'select Id, LeadSource, Rating from Lead where Country = :country and City = :city';
         return Database.getQueryLocator(query);
         
@@ -16,11 +16,11 @@ public class UpdateLeadSourceBatch implements Database.Batchable<sObject> {
         List<Lead> leadList = scope;
         for(Lead leadToUpdate : leadList){
             
-            //Perform the update of LeadSource and Rating on every qualified lead
+            
             leadToUpdate.LeadSource = 'Web';
             leadToUpdate.Rating = 'Hot';            
         }
-        //Commit changes to DB
+        
         update leadList;
         
     }
