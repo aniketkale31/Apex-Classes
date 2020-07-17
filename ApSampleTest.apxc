@@ -1,0 +1,19 @@
+@istest
+private class ApSampleTest {
+	@istest
+    static void tetslead(){
+        List<Lead> l=new List<Lead>();
+        lead l1 = new Lead();
+        l1.LastName='Aniket';
+        l1.Company='Farmers Coop. of Florida';
+        l1.Rating='Hot';
+        l1.LeadSource='Web';
+        l.add(l1);
+        insert l;
+        
+        Test.startTest();
+        ApSample aps = new ApSample();
+        Id jobid=Database.executeBatch(aps);
+        Test.stopTest();
+    }
+}
